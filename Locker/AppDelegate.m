@@ -8,18 +8,58 @@
 
 #import "AppDelegate.h"
 
+#import "MCLeftSortsViewController.h"
+#import "MCFirstPageVIewController.h"
+#import "MCSecondPageViewController.h"
+#import "MCMainNavgationVC.h"
+#import "MCLeftSlideViewController.h"
+#import "MCLeftSliderManager.h"
+#import "MCMainTabBar.h"
+#import "MCMainTabBarVC.h"
+
+
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
 
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    return YES;
+// 设置跟控制器
+-(void)initRootViewController{
+    
+    MCFirstPageVIewController *firstVC = [[MCFirstPageVIewController alloc] init];
+    
+    UINavigationController *firstNav = [[MCMainNavgationVC alloc] initWithRootViewController:firstVC];
+    firstNav.tabBarItem.image = [UIImage imageNamed:@"tab_buddy_nor"];
+    firstVC.title = @"首页";
+    firstVC.navigationController.navigationBar.barTintColor = [UIColor greenColor];
+    
+    MCSecondPageViewController *secondVC = [[MCSecondPageViewController alloc] init];
+    UINavigationController *secondNav = [[MCMainNavgationVC alloc] initWithRootViewController:secondVC];
+    secondNav.tabBarItem.image = [UIImage imageNamed:@"tab_me_nor"];
+    secondVC.title = @"设置";
+    secondVC.navigationController.navigationBar.barTintColor = [UIColor greenColor];
+    
+    MCMainTabBarVC *tabVC = [[MCMainTabBarVC alloc] init];
+    [tabVC setViewControllers:@[firstNav,secondNav]];
+    tabVC.tabBar.tintColor = [UIColor orangeColor];
+    
+    MCLeftSortsViewController *leftVC = [[MCLeftSortsViewController alloc] init];
+    MCLeftSlideViewController *rootVC = [[MCLeftSlideViewController alloc] initWithLeftView:leftVC andMainView:tabVC];
+    self.window.rootViewController = rootVC;
+    
+    
 }
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];   //设置通用背景颜色
+    [self.window makeKeyAndVisible];
+    
+    [self initRootViewController];
+    
+    return YES;
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -1,0 +1,40 @@
+//
+//  PrefixHeader.pch
+//  Locker
+//
+//  Created by mac on 17/2/9.
+//  Copyright © 2017年 mac. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+
+
+#import "Macro.h"
+
+
+//自定义Log
+#ifdef DEBUG
+#define FULog(...) NSLog(__VA_ARGS__)
+#else
+#define FULog(...)
+#endif
+
+
+// RGB颜色
+#define MCColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+// 随机色
+#define MCRandomColor MCColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
+
+
+// 屏幕尺寸
+#define KMainWidth     [UIScreen mainScreen].bounds.size.width
+#define KMainHeight    [UIScreen mainScreen].bounds.size.height
+
+
+
+#endif
